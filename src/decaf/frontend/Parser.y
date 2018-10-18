@@ -200,7 +200,11 @@ Stmt		    :	VariableDef
                 ;
 
 OCStmt          :   SCOPY '(' IDENTIFIER ',' Expr ')'
-
+				{
+					$$.stmt = new Scopy($3.ident,$5.expr,$1.loc);	
+				}
+				;
+				
 SimpleStmt      :	LValue '=' Expr
 					{
 						$$.stmt = new Tree.Assign($1.lvalue, $3.expr, $2.loc);

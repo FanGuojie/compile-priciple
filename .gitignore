@@ -2,6 +2,6 @@
 bin/
 test/
 test.txt
-.calsspath
+.classpath
 .project
 

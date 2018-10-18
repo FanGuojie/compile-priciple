@@ -9,6 +9,7 @@ package decaf.tree;
 import java.util.List;
 
 import decaf.*;
+import decaf.tree.Tree.Visitor;
 import decaf.utils.IndentPrintWriter;
 import decaf.utils.MiscUtils;
 
@@ -482,30 +483,7 @@ public abstract class Tree {
     	}
     }
     
-    public static class Oc extends Tree {
 
-    	public List<Tree> oc;
- 
-        public Oc(List<Tree> oc, Location loc) {
-            super(SCOPY, loc);
-    		this.oc = oc;
-        }
-
-    	@Override
-        public void accept(Visitor v) {
-            v.visitOc(this);
-        }
-    	
-    	@Override
-    	public void printTo(IndentPrintWriter pw) {
-    		pw.println("stmtblock");
-    		pw.incIndent();
-    		for (Tree s : oc) {
-    			s.printTo(pw);
-    		}
-    		pw.decIndent();
-    	}
-    }
 
     /**
       * A while loop
@@ -537,7 +515,35 @@ public abstract class Tree {
     		pw.decIndent();
     	}
    }
+    public static class Scopy extends Tree {
+    	
+		public String expr;
+    	public Expr ident;
+    	
+    	public Scopy(String expr,Expr ident, Location loc) {
+			super(SCOPY, loc);
+			// TODO Auto-generated constructor stub
+			this.expr=expr;
+			this.ident=ident;
+			
+		}
+		@Override
+		public void accept(Visitor v) {
+            v.visitSCopy(this);
+        }
 
+		@Override
+		public void printTo(IndentPrintWriter pw) {
+			// TODO Auto-generated method stub
+			pw.println("scopy");
+			pw.incIndent();
+			pw.println(expr);
+			ident.printTo(pw);
+			pw.decIndent();
+		}
+    	
+    
+    }
     /**
       * A for loop.
       */
@@ -1334,7 +1340,11 @@ public abstract class Tree {
             super();
         }
 
-        public void visitTopLevel(TopLevel that) {
+        public void visitSCopy(Scopy that) {
+        	visitTree(that);
+		}
+
+		public void visitTopLevel(TopLevel that) {
             visitTree(that);
         }
 
@@ -1358,10 +1368,7 @@ public abstract class Tree {
             visitTree(that);
         }
         
-        public void visitOc(Oc that) {
-            visitTree(that);
-        }
-        
+
         public void visitWhileLoop(WhileLoop that) {
             visitTree(that);
         }
