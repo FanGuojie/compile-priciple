@@ -288,7 +288,7 @@ public abstract class Tree {
     public static final int INT = VOID + 1; 
     public static final int BOOL = INT + 1; 
     public static final int STRING = BOOL + 1; 
-
+    public static final int SCOPY = STRING + 1; 
 
     public Location loc;
     public int tag;
@@ -476,6 +476,31 @@ public abstract class Tree {
     		pw.println("stmtblock");
     		pw.incIndent();
     		for (Tree s : block) {
+    			s.printTo(pw);
+    		}
+    		pw.decIndent();
+    	}
+    }
+    
+    public static class Oc extends Tree {
+
+    	public List<Tree> oc;
+ 
+        public Oc(List<Tree> oc, Location loc) {
+            super(SCOPY, loc);
+    		this.oc = oc;
+        }
+
+    	@Override
+        public void accept(Visitor v) {
+            v.visitOc(this);
+        }
+    	
+    	@Override
+    	public void printTo(IndentPrintWriter pw) {
+    		pw.println("stmtblock");
+    		pw.incIndent();
+    		for (Tree s : oc) {
     			s.printTo(pw);
     		}
     		pw.decIndent();
@@ -1332,7 +1357,11 @@ public abstract class Tree {
         public void visitBlock(Block that) {
             visitTree(that);
         }
-
+        
+        public void visitOc(Oc that) {
+            visitTree(that);
+        }
+        
         public void visitWhileLoop(WhileLoop that) {
             visitTree(that);
         }

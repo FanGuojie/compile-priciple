@@ -24,6 +24,7 @@ import java.util.*;
 %Jnodebug
 %Jnoconstruct
 
+%token SCOPY
 %token VOID   BOOL  INT   STRING  CLASS 
 %token NULL   EXTENDS     THIS     WHILE   FOR   
 %token IF     ELSE        RETURN   BREAK   NEW
@@ -195,7 +196,10 @@ Stmt		    :	VariableDef
                 |	PrintStmt ';'
                 |	BreakStmt ';'
                 |	StmtBlock
+                |   OCStmt ';'
                 ;
+
+OCStmt          :   SCOPY '(' IDENTIFIER ',' Expr ')'
 
 SimpleStmt      :	LValue '=' Expr
 					{
@@ -337,7 +341,7 @@ Expr            :	LValue
                 |	'(' CLASS IDENTIFIER ')' Expr
                 	{
                 		$$.expr = new Tree.TypeCast($3.ident, $5.expr, $5.loc);
-                	} 
+                	}
                 ;
 	
 Constant        :	LITERAL
