@@ -32,8 +32,8 @@ import java.util.*;
 %token LITERAL
 %token IDENTIFIER	  AND    OR    STATIC  INSTANCEOF
 %token LESS_EQUAL   GREATER_EQUAL  EQUAL   NOT_EQUAL
-%token IF
-%token IF_DIV
+%token IF IF_DIV
+%token VAR
 %token '+'  '-'  '*'  '/'  '%'  '='  '>'  '<'  '.'
 %token ','  ';'  '!'  '('  ')'  '['  ']'  '{'  '}'
 %token ':'
@@ -273,6 +273,13 @@ LValue          :	Receiver IDENTIFIER
                 	{
                 		$$.lvalue = new Tree.Indexed($1.expr, $3.expr, $1.loc);
                 	}
+                |	VAR IDENTIFIER
+                {
+                	$$.lvalue = new Tree.Var($1.expr, $2.ident, $2.loc);
+						if ($1.loc == null) {
+							$$.loc = $2.loc;
+						}
+                }
                 ;
 
 Call            :	Receiver IDENTIFIER '(' Actuals ')'

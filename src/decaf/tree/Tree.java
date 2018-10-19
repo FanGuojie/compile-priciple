@@ -1290,7 +1290,36 @@ public abstract class Tree {
     		}
     	}
     }
+    /**
+     * VAR
+     */
+   public static class Var extends LValue {
 
+   	public Expr owner;
+   	public String name;
+   	public boolean isDefined;
+
+       public Var(Expr owner, String name, Location loc) {
+           super(IDENT, loc);
+   		this.owner = owner;
+   		this.name = name;
+       }
+
+   	@Override
+       public void accept(Visitor v) {
+           v.visitVar(this);
+       }
+
+   	@Override
+   	public void printTo(IndentPrintWriter pw) {
+   		pw.println("var " + name);
+   		if (owner != null) {
+   			pw.incIndent();
+   			owner.printTo(pw);
+   			pw.decIndent();
+   		}
+   	}
+   }
     /**
       * A constant value given literally.
       * @param value value representation
@@ -1565,7 +1594,10 @@ public abstract class Tree {
         public void visitIdent(Ident that) {
             visitTree(that);
         }
-
+        public void visitVar(Var that) {
+            visitTree(that);
+        }
+        
         public void visitLiteral(Literal that) {
             visitTree(that);
         }
