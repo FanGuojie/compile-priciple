@@ -287,6 +287,7 @@ public abstract class Tree {
     public static final int GUARDED= IFBRANCH+ 1; 
     public static final int LISTCONST= GUARDED+ 1; 
     public static final int ARRAYREPEAT= LISTCONST+ 1; 
+    public static final int ARRAYADD= ARRAYREPEAT+ 1; 
     
     
     /**
@@ -1281,6 +1282,44 @@ public abstract class Tree {
     }
     
     /**
+     * array ad
+     */
+   public static class ArrayAdd extends Expr {
+
+   	public Expr arr;
+   	public Expr con;
+
+       public ArrayAdd(Expr arr, Expr con, Location loc) {
+           super(ARRAYADD, loc);
+   		this.arr = arr;
+   		this.con = con;
+      }
+
+   	@Override
+       public void accept(Visitor v) {
+           v.visitArrayAdd(this);
+       }
+
+   	@Override
+   	public void printTo(IndentPrintWriter pw) {
+   		pw.println("array concat");
+   		pw.incIndent();
+   		if (arr != null) {
+               arr.printTo(pw);
+           }else {
+           	pw.println("<empty>");
+           }
+   		if (con != null) {
+               con.printTo(pw);
+           }else {
+           	pw.println("<empty>");
+           }
+   		pw.decIndent();
+   	}
+   }
+   
+    
+    /**
       * instanceof expression
       */
     public static class TypeTest extends Expr {
@@ -1546,7 +1585,12 @@ public abstract class Tree {
             super();
         }
 
-        public void visitArrayRepaet(ArrayRepeat that) {
+        public void visitArrayAdd(ArrayAdd that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitArrayRepaet(ArrayRepeat that) {
 			// TODO Auto-generated method stub
         	visitTree(that);
 		}

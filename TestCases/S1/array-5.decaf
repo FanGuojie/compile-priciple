@@ -1,0 +1,8 @@
+class Main {
+    static void main() {
+		int[] ws;
+		int[] xs;
+		int[] arr;
+		arr = ws ++ xs;
+     }
+}
