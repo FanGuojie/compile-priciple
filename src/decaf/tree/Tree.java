@@ -281,6 +281,9 @@ public abstract class Tree {
     public static final int READINTEXPR = THISEXPR + 1;
     public static final int READLINEEXPR = READINTEXPR + 1;
     public static final int PRINT = READLINEEXPR + 1;
+    public static final int SCOPY = PRINT + 1; 
+    public static final int SEALED = SCOPY + 1; 
+    
     
     /**
      * Tags for Literal and TypeLiteral
@@ -289,7 +292,7 @@ public abstract class Tree {
     public static final int INT = VOID + 1; 
     public static final int BOOL = INT + 1; 
     public static final int STRING = BOOL + 1; 
-    public static final int SCOPY = STRING + 1; 
+    
 
     public Location loc;
     public int tag;
@@ -345,15 +348,19 @@ public abstract class Tree {
     	
     	public String name;
     	public String parent;
+    	public boolean sealed;
     	public List<Tree> fields;
 
         public ClassDef(String name, String parent, List<Tree> fields,
-    			Location loc) {
+    			Location loc,boolean sealed) {
     		super(CLASSDEF, loc);
     		this.name = name;
     		this.parent = parent;
     		this.fields = fields;
+    		this.sealed=sealed;
+    		
         }
+        
 
     	@Override
         public void accept(Visitor v) {
@@ -362,8 +369,13 @@ public abstract class Tree {
         
     	@Override
     	public void printTo(IndentPrintWriter pw) {
+    		if(sealed) {
+    			pw.print("sealed ");
+    		}
+
     		pw.println("class " + name + " "
     				+ (parent != null ? parent : "<empty>"));
+    		
     		pw.incIndent();
     		for (Tree f : fields) {
     			f.printTo(pw);

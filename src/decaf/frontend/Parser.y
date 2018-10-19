@@ -24,8 +24,8 @@ import java.util.*;
 %Jnodebug
 %Jnoconstruct
 
-%token SCOPY
-%token VOID   BOOL  INT   STRING  CLASS 
+%token SCOPY VOID
+%token  BOOL  INT   STRING  CLASS 
 %token NULL   EXTENDS     THIS     WHILE   FOR   
 %token IF     ELSE        RETURN   BREAK   NEW
 %token PRINT  READ_INTEGER         READ_LINE
@@ -34,6 +34,7 @@ import java.util.*;
 %token LESS_EQUAL   GREATER_EQUAL  EQUAL   NOT_EQUAL
 %token '+'  '-'  '*'  '/'  '%'  '='  '>'  '<'  '.'
 %token ','  ';'  '!'  '('  ')'  '['  ']'  '{'  '}'
+%token SEALED
 
 %left OR
 %left AND 
@@ -103,7 +104,11 @@ Type            :	INT
 
 ClassDef        :	CLASS IDENTIFIER ExtendsClause '{' FieldList '}'
 					{
-						$$.cdef = new Tree.ClassDef($2.ident, $3.ident, $5.flist, $1.loc);
+						$$.cdef = new Tree.ClassDef($2.ident, $3.ident, $5.flist, $1.loc,false);
+					}
+				|   SEALED CLASS IDENTIFIER ExtendsClause '{' FieldList '}'
+					{
+						$$.cdef = new Tree.ClassDef($3.ident, $4.ident, $6.flist, $2.loc,true);
 					}
                 ;
 
