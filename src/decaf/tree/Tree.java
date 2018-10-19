@@ -283,6 +283,8 @@ public abstract class Tree {
     public static final int PRINT = READLINEEXPR + 1;
     public static final int SCOPY = PRINT + 1; 
     public static final int SEALED = SCOPY + 1; 
+    public static final int IFBRANCH = SEALED+ 1; 
+    public static final int GUARDED= IFBRANCH+ 1; 
     
     
     /**
@@ -527,12 +529,15 @@ public abstract class Tree {
     		pw.decIndent();
     	}
    }
+   /**
+     * scopy 浅复制
+     */
     public static class Scopy extends Tree {
     	
-		public String expr;
-    	public Expr ident;
+		public String ident;
+    	public Expr expr;
     	
-    	public Scopy(String expr,Expr ident, Location loc) {
+    	public Scopy(String ident,Expr expr, Location loc) {
 			super(SCOPY, loc);
 			// TODO Auto-generated constructor stub
 			this.expr=expr;
@@ -549,13 +554,95 @@ public abstract class Tree {
 			// TODO Auto-generated method stub
 			pw.println("scopy");
 			pw.incIndent();
-			pw.println(expr);
-			ident.printTo(pw);
+			pw.println(ident);
+			expr.printTo(pw);
 			pw.decIndent();
 		}
     	
     
     }
+    
+
+    /*
+     * GuardedStmt
+     */
+    public static class GuardedStmt extends Tree {
+    	
+    	public List<Expr> branchList;
+    	
+    	public GuardedStmt(List<Expr> branchList, Location loc) {
+ 			super(GUARDED, loc);
+ 			// TODO Auto-generated constructor stub
+ 			this.branchList=branchList;
+ 			
+ 		}
+ 		@Override
+ 		public void accept(Visitor v) {
+            v.visitGuarded(this);
+        }
+
+ 		@Override
+ 		public void printTo(IndentPrintWriter pw) {
+ 			// TODO Auto-generated method stub
+ 			pw.println("guarded");
+            pw.incIndent();
+            if (branchList != null) {
+                for (Expr e : branchList) {
+                    if (e != null) {
+                        e.printTo(pw);
+                    }
+                }
+            }else {
+            	pw.println("<empty>");
+            }
+            pw.decIndent();
+ 		}
+    	
+    
+    }
+
+   /*
+    * IfBranch
+    */
+   public static class IfBranch extends Expr {
+   	
+	public Tree stmt;
+   	public Expr expr;
+   	
+   	public IfBranch(Expr expr,Tree stmt, Location loc) {
+			super(IFBRANCH, loc);
+			// TODO Auto-generated constructor stub
+			this.expr=expr;
+			this.stmt=stmt;
+			
+		}
+		@Override
+		public void accept(Visitor v) {
+           v.visitIfBranch(this);
+       }
+
+		@Override
+		public void printTo(IndentPrintWriter pw) {
+			// TODO Auto-generated method stub
+			pw.println("guard");
+            pw.incIndent();
+    		if (expr != null) {
+    			expr.printTo(pw);
+    		} else {
+    			pw.println("<empty>");
+    		}
+    		if (stmt != null) {
+    			stmt.printTo(pw);
+    		} else {
+    			pw.println("<empty>");
+    		}
+    		pw.decIndent();
+		}
+   	
+   
+   }
+   
+   
     /**
       * A for loop.
       */
@@ -1352,7 +1439,17 @@ public abstract class Tree {
             super();
         }
 
-        public void visitSCopy(Scopy that) {
+        public void visitGuarded(GuardedStmt that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitIfBranch(IfBranch that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitSCopy(Scopy that) {
         	visitTree(that);
 		}
 

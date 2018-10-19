@@ -32,8 +32,11 @@ import java.util.*;
 %token LITERAL
 %token IDENTIFIER	  AND    OR    STATIC  INSTANCEOF
 %token LESS_EQUAL   GREATER_EQUAL  EQUAL   NOT_EQUAL
+%token IF
+%token IF_DIV
 %token '+'  '-'  '*'  '/'  '%'  '='  '>'  '<'  '.'
 %token ','  ';'  '!'  '('  ')'  '['  ']'  '{'  '}'
+%token ':'
 %token SEALED
 
 %left OR
@@ -202,7 +205,35 @@ Stmt		    :	VariableDef
                 |	BreakStmt ';'
                 |	StmtBlock
                 |   OCStmt ';'
+                |	GuardedStmt
                 ;
+
+GuardedStmt 	:   IF '{' IfBranchList '}' 
+				{
+					$$.stmt = new Tree.GuardedStmt($3.elist, $3.loc);
+				}
+
+IfBranchList	:	IfBranchList IF_DIV IfBranch 
+				{
+					$$.elist.add($3.expr);
+				}
+
+				|	IfBranch
+				{
+                    $$ = new SemValue();
+                    $$.elist = new ArrayList<Expr> ();
+                    $$.elist.add($1.expr);
+                }
+                |	/* empty */
+                	{
+                		$$ = new SemValue();
+                	}
+                ; 
+				
+IfBranch		:	Expr ':' Stmt
+				{
+					$$.expr = new Tree.IfBranch($1.expr, $3.stmt, $1.loc);				
+				}
 
 OCStmt          :   SCOPY '(' IDENTIFIER ',' Expr ')'
 				{
