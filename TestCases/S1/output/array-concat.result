@@ -20,23 +20,23 @@ program
                 vardef arr arrtype inttype
                 assign
                     varref arr
-                    array repeat
+                    array concat
                         varref ws
                         varref xs
                 vardef err arrtype inttype
                 assign
                     varref err
-                    array repeat
+                    array concat
                         varref ws
-                        array repeat
+                        array concat
                             varref xs
                             varref ys
                 vardef arr1 arrtype inttype
                 assign
                     varref arr1
-                    array repeat
+                    array concat
                         varref ws
-                        array repeat
+                        array concat
                             varref xs
                             call empty
                                 <empty>

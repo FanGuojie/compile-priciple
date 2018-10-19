@@ -33,7 +33,7 @@ import java.util.*;
 %token IDENTIFIER	  AND    OR    STATIC  INSTANCEOF
 %token LESS_EQUAL   GREATER_EQUAL  EQUAL   NOT_EQUAL
 %token IF IF_DIV
-%token VAR ARRAY_REPEAT ARRAY_ADD
+%token VAR ARRAY_REPEAT ARRAY_ADD DEFAULT
 %token '+'  '-'  '*'  '/'  '%'  '='  '>'  '<'  '.'
 %token ','  ';'  '!'  '('  ')'  '['  ']'  '{'  '}'
 %token ':'
@@ -47,6 +47,7 @@ import java.util.*;
 %left  ARRAY_REPEAT
 %left  '+' '-'
 %left  '*' '/' '%'  
+%left DEFAULT
 %nonassoc UMINUS '!' 
 %nonassoc '[' '.' 
 %nonassoc ')' EMPTY
@@ -403,7 +404,10 @@ Expr            :	LValue
 	            	{
                 		$$.expr = new Tree.subArray($1.expr, $3.expr,$5.expr,$1.loc);
 	            	}
-	             
+	            |	Expr '[' Expr ']' DEFAULT Expr 
+	            	{
+                		$$.expr = new Tree.ArrayDefault($1.expr, $3.expr,$6.expr,$1.loc);
+	            	}
                 ;
 	
 Constant        :	LITERAL

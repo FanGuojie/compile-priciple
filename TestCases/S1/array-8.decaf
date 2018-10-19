@@ -1,0 +1,6 @@
+class Main {
+    static void main() {
+		var xs=1 %% 10;
+		z1 = xs[11] default 0;
+     }
+}

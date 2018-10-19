@@ -104,36 +104,37 @@
   80       | Expr ARRAY_REPEAT Constant
   81       | Expr ARRAY_ADD Expr
   82       | Expr '[' Expr ':' Expr ']'
+  83       | Expr '[' Expr ']' DEFAULT Expr
 
-  83  Constant : LITERAL
-  84           | NULL
-  85           | '[' ListConst ']'
+  84  Constant : LITERAL
+  85           | NULL
+  86           | '[' ListConst ']'
 
-  86  ListConst : Constant
-  87            | ListConst ',' Constant
-  88            |
+  87  ListConst : Constant
+  88            | ListConst ',' Constant
+  89            |
 
-  89  Actuals : ExprList
-  90          |
+  90  Actuals : ExprList
+  91          |
 
-  91  ExprList : ExprList ',' Expr
-  92           | Expr
+  92  ExprList : ExprList ',' Expr
+  93           | Expr
 
-  93  WhileStmt : WHILE '(' Expr ')' Stmt
+  94  WhileStmt : WHILE '(' Expr ')' Stmt
 
-  94  ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt
+  95  ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt
 
-  95  BreakStmt : BREAK
+  96  BreakStmt : BREAK
 
-  96  IfStmt : IF '(' Expr ')' Stmt ElseClause
+  97  IfStmt : IF '(' Expr ')' Stmt ElseClause
 
-  97  ElseClause : ELSE Stmt
-  98             |
+  98  ElseClause : ELSE Stmt
+  99             |
 
-  99  ReturnStmt : RETURN Expr
- 100             | RETURN
+ 100  ReturnStmt : RETURN Expr
+ 101             | RETURN
 
- 101  PrintStmt : PRINT '(' ExprList ')'
+ 102  PrintStmt : PRINT '(' ExprList ')'
 
 state 0
 	$accept : . Program $end  (0)
@@ -636,9 +637,9 @@ state 53
 
 
 state 54
-	Constant : NULL .  (84)
+	Constant : NULL .  (85)
 
-	.  reduce 84
+	.  reduce 85
 
 
 state 55
@@ -648,14 +649,14 @@ state 55
 
 
 state 56
-	WhileStmt : WHILE . '(' Expr ')' Stmt  (93)
+	WhileStmt : WHILE . '(' Expr ')' Stmt  (94)
 
 	'('  shift 91
 	.  error
 
 
 state 57
-	ForStmt : FOR . '(' SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt  (94)
+	ForStmt : FOR . '(' SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt  (95)
 
 	'('  shift 92
 	.  error
@@ -663,7 +664,7 @@ state 57
 
 state 58
 	GuardedStmt : IF . '{' IfBranchList '}'  (39)
-	IfStmt : IF . '(' Expr ')' Stmt ElseClause  (96)
+	IfStmt : IF . '(' Expr ')' Stmt ElseClause  (97)
 
 	'('  shift 93
 	'{'  shift 94
@@ -671,8 +672,8 @@ state 58
 
 
 state 59
-	ReturnStmt : RETURN . Expr  (99)
-	ReturnStmt : RETURN .  (100)
+	ReturnStmt : RETURN . Expr  (100)
+	ReturnStmt : RETURN .  (101)
 	Receiver : .  (49)
 
 	NULL  shift 54
@@ -688,7 +689,7 @@ state 59
 	'('  shift 70
 	'['  shift 71
 	IDENTIFIER  reduce 49
-	';'  reduce 100
+	';'  reduce 101
 
 	Expr  goto 95
 	LValue  goto 96
@@ -698,9 +699,9 @@ state 59
 
 
 state 60
-	BreakStmt : BREAK .  (95)
+	BreakStmt : BREAK .  (96)
 
-	.  reduce 95
+	.  reduce 96
 
 
 state 61
@@ -719,7 +720,7 @@ state 61
 
 
 state 62
-	PrintStmt : PRINT . '(' ExprList ')'  (101)
+	PrintStmt : PRINT . '(' ExprList ')'  (102)
 
 	'('  shift 100
 	.  error
@@ -740,9 +741,9 @@ state 64
 
 
 state 65
-	Constant : LITERAL .  (83)
+	Constant : LITERAL .  (84)
 
-	.  reduce 83
+	.  reduce 84
 
 
 state 66
@@ -837,14 +838,14 @@ state 70
 
 
 state 71
-	Constant : '[' . ListConst ']'  (85)
-	ListConst : .  (88)
+	Constant : '[' . ListConst ']'  (86)
+	ListConst : .  (89)
 
 	NULL  shift 54
 	LITERAL  shift 65
 	'['  shift 71
-	','  reduce 88
-	']'  reduce 88
+	','  reduce 89
+	']'  reduce 89
 
 	Constant  goto 109
 	ListConst  goto 110
@@ -952,6 +953,7 @@ state 85
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -1044,7 +1046,7 @@ state 90
 
 
 state 91
-	WhileStmt : WHILE '(' . Expr ')' Stmt  (93)
+	WhileStmt : WHILE '(' . Expr ')' Stmt  (94)
 	Receiver : .  (49)
 
 	NULL  shift 54
@@ -1069,7 +1071,7 @@ state 91
 
 
 state 92
-	ForStmt : FOR '(' . SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt  (94)
+	ForStmt : FOR '(' . SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt  (95)
 	SimpleStmt : .  (47)
 	Receiver : .  (49)
 
@@ -1097,7 +1099,7 @@ state 92
 
 
 state 93
-	IfStmt : IF '(' . Expr ')' Stmt ElseClause  (96)
+	IfStmt : IF '(' . Expr ')' Stmt ElseClause  (97)
 	Receiver : .  (49)
 
 	NULL  shift 54
@@ -1170,7 +1172,8 @@ state 95
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
-	ReturnStmt : RETURN Expr .  (99)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
+	ReturnStmt : RETURN Expr .  (100)
 
 	AND  shift 116
 	OR  shift 117
@@ -1189,7 +1192,7 @@ state 95
 	'<'  shift 130
 	'.'  shift 131
 	'['  shift 132
-	';'  reduce 99
+	';'  reduce 100
 
 
 state 96
@@ -1220,7 +1223,7 @@ state 99
 
 
 state 100
-	PrintStmt : PRINT '(' . ExprList ')'  (101)
+	PrintStmt : PRINT '(' . ExprList ')'  (102)
 	Receiver : .  (49)
 
 	NULL  shift 54
@@ -1310,6 +1313,7 @@ state 105
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	'.'  shift 131
 	'['  shift 132
@@ -1355,6 +1359,7 @@ state 106
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	'.'  shift 131
 	'['  shift 132
@@ -1407,6 +1412,7 @@ state 108
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -1430,14 +1436,14 @@ state 108
 
 
 state 109
-	ListConst : Constant .  (86)
+	ListConst : Constant .  (87)
 
-	.  reduce 86
+	.  reduce 87
 
 
 state 110
-	Constant : '[' ListConst . ']'  (85)
-	ListConst : ListConst . ',' Constant  (87)
+	Constant : '[' ListConst . ']'  (86)
+	ListConst : ListConst . ',' Constant  (88)
 
 	','  shift 151
 	']'  shift 152
@@ -1844,6 +1850,7 @@ state 131
 state 132
 	LValue : Expr '[' . Expr ']'  (51)
 	Expr : Expr '[' . Expr ':' Expr ']'  (82)
+	Expr : Expr '[' . Expr ']' DEFAULT Expr  (83)
 	Receiver : .  (49)
 
 	NULL  shift 54
@@ -1948,7 +1955,8 @@ state 136
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
-	WhileStmt : WHILE '(' Expr . ')' Stmt  (93)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
+	WhileStmt : WHILE '(' Expr . ')' Stmt  (94)
 
 	AND  shift 116
 	OR  shift 117
@@ -1972,7 +1980,7 @@ state 136
 
 
 state 137
-	ForStmt : FOR '(' SimpleStmt . ';' Expr ';' SimpleStmt ')' Stmt  (94)
+	ForStmt : FOR '(' SimpleStmt . ';' Expr ';' SimpleStmt ')' Stmt  (95)
 
 	';'  shift 173
 	.  error
@@ -1997,7 +2005,8 @@ state 138
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
-	IfStmt : IF '(' Expr . ')' Stmt ElseClause  (96)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
+	IfStmt : IF '(' Expr . ')' Stmt ElseClause  (97)
 
 	AND  shift 116
 	OR  shift 117
@@ -2055,6 +2064,7 @@ state 141
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -2130,7 +2140,8 @@ state 144
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
-	ExprList : Expr .  (92)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
+	ExprList : Expr .  (93)
 
 	AND  shift 116
 	OR  shift 117
@@ -2149,13 +2160,13 @@ state 144
 	'<'  shift 130
 	'.'  shift 131
 	'['  shift 132
-	','  reduce 92
-	')'  reduce 92
+	','  reduce 93
+	')'  reduce 93
 
 
 state 145
-	ExprList : ExprList . ',' Expr  (91)
-	PrintStmt : PRINT '(' ExprList . ')'  (101)
+	ExprList : ExprList . ',' Expr  (92)
+	PrintStmt : PRINT '(' ExprList . ')'  (102)
 
 	','  shift 180
 	')'  shift 181
@@ -2194,6 +2205,7 @@ state 148
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -2230,7 +2242,7 @@ state 150
 
 
 state 151
-	ListConst : ListConst ',' . Constant  (87)
+	ListConst : ListConst ',' . Constant  (88)
 
 	NULL  shift 54
 	LITERAL  shift 65
@@ -2241,9 +2253,9 @@ state 151
 
 
 state 152
-	Constant : '[' ListConst ']' .  (85)
+	Constant : '[' ListConst ']' .  (86)
 
-	.  reduce 85
+	.  reduce 86
 
 
 state 153
@@ -2266,6 +2278,7 @@ state 153
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	LESS_EQUAL  shift 118
 	GREATER_EQUAL  shift 119
@@ -2311,6 +2324,7 @@ state 154
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	LESS_EQUAL  shift 118
@@ -2356,6 +2370,7 @@ state 155
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	ARRAY_REPEAT  shift 122
 	ARRAY_ADD  shift 123
@@ -2397,6 +2412,7 @@ state 156
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	ARRAY_REPEAT  shift 122
 	ARRAY_ADD  shift 123
@@ -2438,6 +2454,7 @@ state 157
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	LESS_EQUAL  shift 118
 	GREATER_EQUAL  shift 119
@@ -2481,6 +2498,7 @@ state 158
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	LESS_EQUAL  shift 118
 	GREATER_EQUAL  shift 119
@@ -2530,6 +2548,7 @@ state 160
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr ARRAY_ADD Expr .  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	ARRAY_REPEAT  shift 122
 	ARRAY_ADD  shift 123
@@ -2575,6 +2594,7 @@ state 161
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	'*'  shift 126
 	'/'  shift 127
@@ -2620,6 +2640,7 @@ state 162
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	'*'  shift 126
 	'/'  shift 127
@@ -2665,6 +2686,7 @@ state 163
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	'.'  shift 131
 	'['  shift 132
@@ -2710,6 +2732,7 @@ state 164
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	'.'  shift 131
 	'['  shift 132
@@ -2755,6 +2778,7 @@ state 165
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	'.'  shift 131
 	'['  shift 132
@@ -2800,6 +2824,7 @@ state 166
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	ARRAY_REPEAT  shift 122
 	ARRAY_ADD  shift 123
@@ -2841,6 +2866,7 @@ state 167
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	ARRAY_REPEAT  shift 122
 	ARRAY_ADD  shift 123
@@ -2883,6 +2909,8 @@ state 168
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
 	Expr : Expr '[' Expr . ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
+	Expr : Expr '[' Expr . ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -2926,6 +2954,7 @@ state 169
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -2951,7 +2980,7 @@ state 169
 state 170
 	Call : Receiver IDENTIFIER '(' . Actuals ')'  (53)
 	Receiver : .  (49)
-	Actuals : .  (90)
+	Actuals : .  (91)
 
 	NULL  shift 54
 	THIS  shift 55
@@ -2966,7 +2995,7 @@ state 170
 	'('  shift 70
 	'['  shift 71
 	IDENTIFIER  reduce 49
-	')'  reduce 90
+	')'  reduce 91
 
 	Expr  goto 144
 	LValue  goto 96
@@ -3003,7 +3032,7 @@ state 171
 
 
 state 172
-	WhileStmt : WHILE '(' Expr ')' . Stmt  (93)
+	WhileStmt : WHILE '(' Expr ')' . Stmt  (94)
 	SimpleStmt : .  (47)
 	Receiver : .  (49)
 
@@ -3057,7 +3086,7 @@ state 172
 
 
 state 173
-	ForStmt : FOR '(' SimpleStmt ';' . Expr ';' SimpleStmt ')' Stmt  (94)
+	ForStmt : FOR '(' SimpleStmt ';' . Expr ';' SimpleStmt ')' Stmt  (95)
 	Receiver : .  (49)
 
 	NULL  shift 54
@@ -3082,7 +3111,7 @@ state 173
 
 
 state 174
-	IfStmt : IF '(' Expr ')' . Stmt ElseClause  (96)
+	IfStmt : IF '(' Expr ')' . Stmt ElseClause  (97)
 	SimpleStmt : .  (47)
 	Receiver : .  (49)
 
@@ -3247,6 +3276,7 @@ state 179
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -3270,7 +3300,7 @@ state 179
 
 
 state 180
-	ExprList : ExprList ',' . Expr  (91)
+	ExprList : ExprList ',' . Expr  (92)
 	Receiver : .  (49)
 
 	NULL  shift 54
@@ -3295,9 +3325,9 @@ state 180
 
 
 state 181
-	PrintStmt : PRINT '(' ExprList ')' .  (101)
+	PrintStmt : PRINT '(' ExprList ')' .  (102)
 
-	.  reduce 101
+	.  reduce 102
 
 
 state 182
@@ -3333,15 +3363,39 @@ state 183
 
 
 state 184
-	ListConst : ListConst ',' Constant .  (87)
+	ListConst : ListConst ',' Constant .  (88)
 
-	.  reduce 87
+	.  reduce 88
 
 
 state 185
 	LValue : Expr '[' Expr ']' .  (51)
+	Expr : Expr '[' Expr ']' . DEFAULT Expr  (83)
 
-	.  reduce 51
+	DEFAULT  shift 199
+	AND  reduce 51
+	OR  reduce 51
+	LESS_EQUAL  reduce 51
+	GREATER_EQUAL  reduce 51
+	EQUAL  reduce 51
+	NOT_EQUAL  reduce 51
+	ARRAY_REPEAT  reduce 51
+	ARRAY_ADD  reduce 51
+	'+'  reduce 51
+	'-'  reduce 51
+	'*'  reduce 51
+	'/'  reduce 51
+	'%'  reduce 51
+	'='  reduce 51
+	'>'  reduce 51
+	'<'  reduce 51
+	'.'  reduce 51
+	','  reduce 51
+	';'  reduce 51
+	')'  reduce 51
+	'['  reduce 51
+	']'  reduce 51
+	':'  reduce 51
 
 
 state 186
@@ -3362,7 +3416,7 @@ state 186
 	'['  shift 71
 	IDENTIFIER  reduce 49
 
-	Expr  goto 199
+	Expr  goto 200
 	LValue  goto 96
 	Call  goto 97
 	Receiver  goto 88
@@ -3372,16 +3426,16 @@ state 186
 state 187
 	Call : Receiver IDENTIFIER '(' Actuals . ')'  (53)
 
-	')'  shift 200
+	')'  shift 201
 	.  error
 
 
 state 188
-	Actuals : ExprList .  (89)
-	ExprList : ExprList . ',' Expr  (91)
+	Actuals : ExprList .  (90)
+	ExprList : ExprList . ',' Expr  (92)
 
 	','  shift 180
-	')'  reduce 89
+	')'  reduce 90
 
 
 state 189
@@ -3404,6 +3458,7 @@ state 189
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -3421,15 +3476,15 @@ state 189
 	'>'  shift 129
 	'<'  shift 130
 	'.'  shift 131
-	')'  shift 201
+	')'  shift 202
 	'['  shift 132
 	.  error
 
 
 state 190
-	WhileStmt : WHILE '(' Expr ')' Stmt .  (93)
+	WhileStmt : WHILE '(' Expr ')' Stmt .  (94)
 
-	.  reduce 93
+	.  reduce 94
 
 
 state 191
@@ -3451,7 +3506,8 @@ state 191
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
-	ForStmt : FOR '(' SimpleStmt ';' Expr . ';' SimpleStmt ')' Stmt  (94)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
+	ForStmt : FOR '(' SimpleStmt ';' Expr . ';' SimpleStmt ')' Stmt  (95)
 
 	AND  shift 116
 	OR  shift 117
@@ -3469,47 +3525,47 @@ state 191
 	'>'  shift 129
 	'<'  shift 130
 	'.'  shift 131
-	';'  shift 202
+	';'  shift 203
 	'['  shift 132
 	.  error
 
 
 state 192
-	IfStmt : IF '(' Expr ')' Stmt . ElseClause  (96)
-	ElseClause : .  (98)
+	IfStmt : IF '(' Expr ')' Stmt . ElseClause  (97)
+	ElseClause : .  (99)
 
-	ELSE  shift 203
-	SCOPY  reduce 98
-	VOID  reduce 98
-	BOOL  reduce 98
-	INT  reduce 98
-	STRING  reduce 98
-	CLASS  reduce 98
-	NULL  reduce 98
-	THIS  reduce 98
-	WHILE  reduce 98
-	FOR  reduce 98
-	IF  reduce 98
-	RETURN  reduce 98
-	BREAK  reduce 98
-	NEW  reduce 98
-	PRINT  reduce 98
-	READ_INTEGER  reduce 98
-	READ_LINE  reduce 98
-	LITERAL  reduce 98
-	IDENTIFIER  reduce 98
-	INSTANCEOF  reduce 98
-	IF_DIV  reduce 98
-	VAR  reduce 98
-	'-'  reduce 98
-	';'  reduce 98
-	'!'  reduce 98
-	'('  reduce 98
-	'['  reduce 98
-	'{'  reduce 98
-	'}'  reduce 98
+	ELSE  shift 204
+	SCOPY  reduce 99
+	VOID  reduce 99
+	BOOL  reduce 99
+	INT  reduce 99
+	STRING  reduce 99
+	CLASS  reduce 99
+	NULL  reduce 99
+	THIS  reduce 99
+	WHILE  reduce 99
+	FOR  reduce 99
+	IF  reduce 99
+	RETURN  reduce 99
+	BREAK  reduce 99
+	NEW  reduce 99
+	PRINT  reduce 99
+	READ_INTEGER  reduce 99
+	READ_LINE  reduce 99
+	LITERAL  reduce 99
+	IDENTIFIER  reduce 99
+	INSTANCEOF  reduce 99
+	IF_DIV  reduce 99
+	VAR  reduce 99
+	'-'  reduce 99
+	';'  reduce 99
+	'!'  reduce 99
+	'('  reduce 99
+	'['  reduce 99
+	'{'  reduce 99
+	'}'  reduce 99
 
-	ElseClause  goto 204
+	ElseClause  goto 205
 
 
 state 193
@@ -3549,7 +3605,8 @@ state 196
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
-	ExprList : ExprList ',' Expr .  (91)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
+	ExprList : ExprList ',' Expr .  (92)
 
 	AND  shift 116
 	OR  shift 117
@@ -3568,14 +3625,14 @@ state 196
 	'<'  shift 130
 	'.'  shift 131
 	'['  shift 132
-	','  reduce 91
-	')'  reduce 91
+	','  reduce 92
+	')'  reduce 92
 
 
 state 197
 	Expr : INSTANCEOF '(' Expr ',' IDENTIFIER . ')'  (78)
 
-	')'  shift 205
+	')'  shift 206
 	.  error
 
 
@@ -3599,11 +3656,37 @@ state 198
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	.  reduce 79
 
 
 state 199
+	Expr : Expr '[' Expr ']' DEFAULT . Expr  (83)
+	Receiver : .  (49)
+
+	NULL  shift 54
+	THIS  shift 55
+	NEW  shift 61
+	READ_INTEGER  shift 63
+	READ_LINE  shift 64
+	LITERAL  shift 65
+	INSTANCEOF  shift 66
+	VAR  shift 67
+	'-'  shift 68
+	'!'  shift 69
+	'('  shift 70
+	'['  shift 71
+	IDENTIFIER  reduce 49
+
+	Expr  goto 207
+	LValue  goto 96
+	Call  goto 97
+	Receiver  goto 88
+	Constant  goto 89
+
+
+state 200
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
 	Expr : Expr . '+' Expr  (57)
@@ -3623,6 +3706,7 @@ state 199
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr . '[' Expr ':' Expr ']'  (82)
 	Expr : Expr '[' Expr ':' Expr . ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
 
 	AND  shift 116
 	OR  shift 117
@@ -3641,24 +3725,24 @@ state 199
 	'<'  shift 130
 	'.'  shift 131
 	'['  shift 132
-	']'  shift 206
+	']'  shift 208
 	.  error
 
 
-state 200
+state 201
 	Call : Receiver IDENTIFIER '(' Actuals ')' .  (53)
 
 	.  reduce 53
 
 
-state 201
+state 202
 	OCStmt : SCOPY '(' IDENTIFIER ',' Expr ')' .  (44)
 
 	.  reduce 44
 
 
-state 202
-	ForStmt : FOR '(' SimpleStmt ';' Expr ';' . SimpleStmt ')' Stmt  (94)
+state 203
+	ForStmt : FOR '(' SimpleStmt ';' Expr ';' . SimpleStmt ')' Stmt  (95)
 	SimpleStmt : .  (47)
 	Receiver : .  (49)
 
@@ -3677,61 +3761,7 @@ state 202
 	IDENTIFIER  reduce 49
 	')'  reduce 47
 
-	SimpleStmt  goto 207
-	Expr  goto 85
-	LValue  goto 86
-	Call  goto 87
-	Receiver  goto 88
-	Constant  goto 89
-
-
-state 203
-	ElseClause : ELSE . Stmt  (97)
-	SimpleStmt : .  (47)
-	Receiver : .  (49)
-
-	SCOPY  shift 53
-	VOID  shift 17
-	BOOL  shift 18
-	INT  shift 19
-	STRING  shift 20
-	CLASS  shift 21
-	NULL  shift 54
-	THIS  shift 55
-	WHILE  shift 56
-	FOR  shift 57
-	IF  shift 58
-	RETURN  shift 59
-	BREAK  shift 60
-	NEW  shift 61
-	PRINT  shift 62
-	READ_INTEGER  shift 63
-	READ_LINE  shift 64
-	LITERAL  shift 65
-	INSTANCEOF  shift 66
-	VAR  shift 67
-	'-'  shift 68
-	'!'  shift 69
-	'('  shift 70
-	'['  shift 71
-	'{'  shift 48
-	IDENTIFIER  reduce 49
-	';'  reduce 47
-
-	VariableDef  goto 73
-	Variable  goto 25
-	Type  goto 40
-	StmtBlock  goto 74
-	Stmt  goto 208
-	SimpleStmt  goto 76
-	IfStmt  goto 77
-	WhileStmt  goto 78
-	ForStmt  goto 79
-	ReturnStmt  goto 80
-	PrintStmt  goto 81
-	BreakStmt  goto 82
-	OCStmt  goto 83
-	GuardedStmt  goto 84
+	SimpleStmt  goto 209
 	Expr  goto 85
 	LValue  goto 86
 	Call  goto 87
@@ -3740,38 +3770,7 @@ state 203
 
 
 state 204
-	IfStmt : IF '(' Expr ')' Stmt ElseClause .  (96)
-
-	.  reduce 96
-
-
-state 205
-	Expr : INSTANCEOF '(' Expr ',' IDENTIFIER ')' .  (78)
-
-	.  reduce 78
-
-
-state 206
-	Expr : Expr '[' Expr ':' Expr ']' .  (82)
-
-	.  reduce 82
-
-
-state 207
-	ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt . ')' Stmt  (94)
-
-	')'  shift 209
-	.  error
-
-
-state 208
-	ElseClause : ELSE Stmt .  (97)
-
-	.  reduce 97
-
-
-state 209
-	ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt ')' . Stmt  (94)
+	ElseClause : ELSE . Stmt  (98)
 	SimpleStmt : .  (47)
 	Receiver : .  (49)
 
@@ -3824,11 +3823,142 @@ state 209
 	Constant  goto 89
 
 
+state 205
+	IfStmt : IF '(' Expr ')' Stmt ElseClause .  (97)
+
+	.  reduce 97
+
+
+state 206
+	Expr : INSTANCEOF '(' Expr ',' IDENTIFIER ')' .  (78)
+
+	.  reduce 78
+
+
+state 207
+	Receiver : Expr . '.'  (48)
+	LValue : Expr . '[' Expr ']'  (51)
+	Expr : Expr . '+' Expr  (57)
+	Expr : Expr . '-' Expr  (58)
+	Expr : Expr . '*' Expr  (59)
+	Expr : Expr . '/' Expr  (60)
+	Expr : Expr . '%' Expr  (61)
+	Expr : Expr . EQUAL Expr  (62)
+	Expr : Expr . NOT_EQUAL Expr  (63)
+	Expr : Expr . '<' Expr  (64)
+	Expr : Expr . '>' Expr  (65)
+	Expr : Expr . LESS_EQUAL Expr  (66)
+	Expr : Expr . GREATER_EQUAL Expr  (67)
+	Expr : Expr . AND Expr  (68)
+	Expr : Expr . OR Expr  (69)
+	Expr : Expr . ARRAY_REPEAT Constant  (80)
+	Expr : Expr . ARRAY_ADD Expr  (81)
+	Expr : Expr . '[' Expr ':' Expr ']'  (82)
+	Expr : Expr . '[' Expr ']' DEFAULT Expr  (83)
+	Expr : Expr '[' Expr ']' DEFAULT Expr .  (83)
+
+	'.'  shift 131
+	'['  shift 132
+	AND  reduce 83
+	OR  reduce 83
+	LESS_EQUAL  reduce 83
+	GREATER_EQUAL  reduce 83
+	EQUAL  reduce 83
+	NOT_EQUAL  reduce 83
+	ARRAY_REPEAT  reduce 83
+	ARRAY_ADD  reduce 83
+	'+'  reduce 83
+	'-'  reduce 83
+	'*'  reduce 83
+	'/'  reduce 83
+	'%'  reduce 83
+	'>'  reduce 83
+	'<'  reduce 83
+	','  reduce 83
+	';'  reduce 83
+	')'  reduce 83
+	']'  reduce 83
+	':'  reduce 83
+
+
+state 208
+	Expr : Expr '[' Expr ':' Expr ']' .  (82)
+
+	.  reduce 82
+
+
+state 209
+	ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt . ')' Stmt  (95)
+
+	')'  shift 211
+	.  error
+
+
 state 210
-	ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt .  (94)
+	ElseClause : ELSE Stmt .  (98)
 
-	.  reduce 94
+	.  reduce 98
 
 
-57 terminals, 35 nonterminals
-102 grammar rules, 211 states
+state 211
+	ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt ')' . Stmt  (95)
+	SimpleStmt : .  (47)
+	Receiver : .  (49)
+
+	SCOPY  shift 53
+	VOID  shift 17
+	BOOL  shift 18
+	INT  shift 19
+	STRING  shift 20
+	CLASS  shift 21
+	NULL  shift 54
+	THIS  shift 55
+	WHILE  shift 56
+	FOR  shift 57
+	IF  shift 58
+	RETURN  shift 59
+	BREAK  shift 60
+	NEW  shift 61
+	PRINT  shift 62
+	READ_INTEGER  shift 63
+	READ_LINE  shift 64
+	LITERAL  shift 65
+	INSTANCEOF  shift 66
+	VAR  shift 67
+	'-'  shift 68
+	'!'  shift 69
+	'('  shift 70
+	'['  shift 71
+	'{'  shift 48
+	IDENTIFIER  reduce 49
+	';'  reduce 47
+
+	VariableDef  goto 73
+	Variable  goto 25
+	Type  goto 40
+	StmtBlock  goto 74
+	Stmt  goto 212
+	SimpleStmt  goto 76
+	IfStmt  goto 77
+	WhileStmt  goto 78
+	ForStmt  goto 79
+	ReturnStmt  goto 80
+	PrintStmt  goto 81
+	BreakStmt  goto 82
+	OCStmt  goto 83
+	GuardedStmt  goto 84
+	Expr  goto 85
+	LValue  goto 86
+	Call  goto 87
+	Receiver  goto 88
+	Constant  goto 89
+
+
+state 212
+	ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt .  (95)
+
+	.  reduce 95
+
+
+58 terminals, 35 nonterminals
+103 grammar rules, 213 states

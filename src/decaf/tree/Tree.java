@@ -289,6 +289,7 @@ public abstract class Tree {
     public static final int ARRAYREPEAT= LISTCONST+ 1; 
     public static final int ARRAYADD= ARRAYREPEAT+ 1; 
     public static final int SUBARRAY= ARRAYADD+ 1; 
+    public static final int ARRAYDEFAULT= SUBARRAY+ 1; 
     
     
     /**
@@ -1304,7 +1305,7 @@ public abstract class Tree {
 
    	@Override
    	public void printTo(IndentPrintWriter pw) {
-   		pw.println("array repeat");
+   		pw.println("array concat");
    		pw.incIndent();
    		if (arr != null) {
                arr.printTo(pw);
@@ -1369,6 +1370,55 @@ public abstract class Tree {
   	}
   }
   
+  /**
+   * array default
+   */
+ public static class ArrayDefault extends Expr {
+
+ 	public Expr arr;
+ 	public Expr sub;
+ 	public Expr def;
+ 	
+
+     public ArrayDefault(Expr arr, Expr sub, Expr def, Location loc) {
+         super(ARRAYDEFAULT, loc);
+ 		this.arr = arr;
+ 		this.sub= sub;
+ 		this.def = def;
+    }
+
+ 	@Override
+     public void accept(Visitor v) {
+         v.visitArrayDefault(this);
+     }
+
+ 	@Override
+ 	public void printTo(IndentPrintWriter pw) {
+ 		pw.println("arrref");
+ 		pw.incIndent();
+ 		if (arr != null) {
+             arr.printTo(pw);
+         }else {
+         	pw.println("<empty>");
+         }
+ 		if (sub != null) {
+ 			sub.printTo(pw);
+         }else {
+         	pw.println("<empty>");
+         }
+ 		pw.println("default");
+ 		pw.incIndent();
+ 		
+ 		if (def != null) {
+ 			def.printTo(pw);
+         }else {
+         	pw.println("<empty>");
+         }
+ 		pw.decIndent();
+ 		pw.decIndent();
+ 	}
+ }
+
    
     /**
       * instanceof expression
@@ -1636,7 +1686,12 @@ public abstract class Tree {
             super();
         }
 
-        public void visitsubArray(subArray that) {
+        public void visitArrayDefault(ArrayDefault that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitsubArray(subArray that) {
 			// TODO Auto-generated method stub
         	visitTree(that);
 		}

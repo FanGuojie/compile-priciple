@@ -9,9 +9,9 @@ program
                         intconst 1
                         intconst 10
                 assign
-                    var sub1
+                    varref z1
                     arrref
                         varref xs
-                        range
-                            intconst 2
-                            intconst 6
+                        intconst 11
+                        default
+                            intconst 0
