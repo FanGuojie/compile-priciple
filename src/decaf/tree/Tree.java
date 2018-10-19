@@ -290,6 +290,7 @@ public abstract class Tree {
     public static final int ARRAYADD= ARRAYREPEAT+ 1; 
     public static final int SUBARRAY= ARRAYADD+ 1; 
     public static final int ARRAYDEFAULT= SUBARRAY+ 1; 
+    public static final int ARRAYPYTHON= ARRAYDEFAULT+ 1; 
     
     
     /**
@@ -1419,7 +1420,68 @@ public abstract class Tree {
  	}
  }
 
-   
+
+ /**
+  * array python
+  */
+public static class ArrayPython extends Expr {
+
+	public Expr expr1;
+	public Expr expr2;
+	public Expr expr3;
+	public String ident;
+	public boolean ifFlag;
+	
+    public ArrayPython(Expr expr1, String ident,Expr expr2, Expr expr3, Location loc) {
+        super(ARRAYPYTHON, loc);
+		this.expr1 = expr1;
+		this.expr2 = expr2;
+		this.expr3 = expr3;
+		this.ident=ident;
+		this.ifFlag=true;
+   }
+    public ArrayPython(Expr expr1, String ident,Expr expr2,  Location loc) {
+        super(ARRAYPYTHON, loc);
+		this.expr1 = expr1;
+		this.expr2 = expr2;
+		this.expr3 = expr3;
+		this.ifFlag=false;
+   }
+	@Override
+    public void accept(Visitor v) {
+        v.visitArrayPython(this);
+    }
+
+	@Override
+	public void printTo(IndentPrintWriter pw) {
+		pw.println("arref comp");
+		pw.incIndent();
+		pw.println("varbind "+ident);
+		
+		if (expr2 != null) {
+			expr2.printTo(pw);
+        }else {
+        	pw.println("<empty>");
+        }
+
+		if(ifFlag) {
+			if (expr3 != null) {
+				expr3.printTo(pw);
+	        }else {
+	        	pw.println("<empty>");
+	        }
+		}
+		
+		if (expr1 != null) {
+			expr1.printTo(pw);
+        }else {
+        	pw.println("<empty>");
+        }
+		pw.decIndent();
+	}
+}
+
+  
     /**
       * instanceof expression
       */
@@ -1686,7 +1748,12 @@ public abstract class Tree {
             super();
         }
 
-        public void visitArrayDefault(ArrayDefault that) {
+        public void visitArrayPython(ArrayPython that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitArrayDefault(ArrayDefault that) {
 			// TODO Auto-generated method stub
         	visitTree(that);
 		}

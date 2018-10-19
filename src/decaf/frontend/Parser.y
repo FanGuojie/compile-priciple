@@ -33,7 +33,7 @@ import java.util.*;
 %token IDENTIFIER	  AND    OR    STATIC  INSTANCEOF
 %token LESS_EQUAL   GREATER_EQUAL  EQUAL   NOT_EQUAL
 %token IF IF_DIV
-%token VAR ARRAY_REPEAT ARRAY_ADD DEFAULT
+%token VAR ARRAY_REPEAT ARRAY_ADD DEFAULT IN
 %token '+'  '-'  '*'  '/'  '%'  '='  '>'  '<'  '.'
 %token ','  ';'  '!'  '('  ')'  '['  ']'  '{'  '}'
 %token ':'
@@ -407,6 +407,14 @@ Expr            :	LValue
 	            |	Expr '[' Expr ']' DEFAULT Expr 
 	            	{
                 		$$.expr = new Tree.ArrayDefault($1.expr, $3.expr,$6.expr,$1.loc);
+	            	}
+	            |	'[' Expr  FOR IDENTIFIER IN Expr ']'
+	            	{
+                		$$.expr = new Tree.ArrayPython($2.expr, $4.ident,$6.expr,$2.loc);
+	            	}
+	            |	'[' Expr  FOR IDENTIFIER IN Expr IF Expr ']'
+	            	{
+                		$$.expr = new Tree.ArrayPython($2.expr, $4.ident,$6.expr,$8.expr,$2.loc);
 	            	}
                 ;
 	

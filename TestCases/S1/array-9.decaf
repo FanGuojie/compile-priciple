@@ -1,0 +1,7 @@
+class Main {
+    static void main() {
+		var xs = 1 %% 10;
+		var y =1;
+		var zs=[x*y for x in xs if x >= 5];
+     }
+}
