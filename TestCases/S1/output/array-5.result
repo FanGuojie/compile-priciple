@@ -8,6 +8,6 @@ program
                 vardef arr arrtype inttype
                 assign
                     varref arr
-                    array concat
+                    array repeat
                         varref ws
                         varref xs

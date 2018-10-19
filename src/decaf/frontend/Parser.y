@@ -399,6 +399,11 @@ Expr            :	LValue
 	                {
                 		$$.expr = new Tree.ArrayAdd($1.expr, $3.expr, $1.loc);
 	                }
+	            |	Expr '['Expr ':' Expr ']'
+	            	{
+                		$$.expr = new Tree.subArray($1.expr, $3.expr,$5.expr,$1.loc);
+	            	}
+	             
                 ;
 	
 Constant        :	LITERAL

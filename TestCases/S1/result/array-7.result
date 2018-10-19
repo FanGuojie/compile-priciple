@@ -10,7 +10,7 @@ program
                 assign
                     varref arr
                     array concat
-                        varref ws
                         array concat
+                            varref ws
                             varref ys
-                            varref xs
+                        varref xs

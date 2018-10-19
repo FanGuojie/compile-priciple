@@ -288,6 +288,7 @@ public abstract class Tree {
     public static final int LISTCONST= GUARDED+ 1; 
     public static final int ARRAYREPEAT= LISTCONST+ 1; 
     public static final int ARRAYADD= ARRAYREPEAT+ 1; 
+    public static final int SUBARRAY= ARRAYADD+ 1; 
     
     
     /**
@@ -1282,7 +1283,8 @@ public abstract class Tree {
     }
     
     /**
-     * array ad
+     * array add
+     * 
      */
    public static class ArrayAdd extends Expr {
 
@@ -1302,7 +1304,7 @@ public abstract class Tree {
 
    	@Override
    	public void printTo(IndentPrintWriter pw) {
-   		pw.println("array concat");
+   		pw.println("array repeat");
    		pw.incIndent();
    		if (arr != null) {
                arr.printTo(pw);
@@ -1318,7 +1320,56 @@ public abstract class Tree {
    	}
    }
    
-    
+   
+   /**
+    * subarray 
+    */
+  public static class subArray extends Expr {
+
+  	public Expr arr;
+  	public Expr first;
+  	public Expr last;
+  	
+
+      public subArray(Expr arr, Expr first, Expr last, Location loc) {
+          super(SUBARRAY, loc);
+  		this.arr = arr;
+  		this.first = first;
+  		this.last = last;
+     }
+
+  	@Override
+      public void accept(Visitor v) {
+          v.visitsubArray(this);
+      }
+
+  	@Override
+  	public void printTo(IndentPrintWriter pw) {
+  		pw.println("arrref");
+  		pw.incIndent();
+  		if (arr != null) {
+              arr.printTo(pw);
+          }else {
+          	pw.println("<empty>");
+          }
+  		pw.println("range");
+  		pw.incIndent();
+  		if (first != null) {
+  			first.printTo(pw);
+          }else {
+          	pw.println("<empty>");
+          }
+  		if (last != null) {
+  			last.printTo(pw);
+          }else {
+          	pw.println("<empty>");
+          }
+  		pw.decIndent();
+  		pw.decIndent();
+  	}
+  }
+  
+   
     /**
       * instanceof expression
       */
@@ -1585,7 +1636,12 @@ public abstract class Tree {
             super();
         }
 
-        public void visitArrayAdd(ArrayAdd that) {
+        public void visitsubArray(subArray that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitArrayAdd(ArrayAdd that) {
 			// TODO Auto-generated method stub
         	visitTree(that);
 		}

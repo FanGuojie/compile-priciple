@@ -1,0 +1,6 @@
+class Main {
+    static void main() {
+		var xs=1 %% 10;
+		var sub1 = xs[2:6];
+     }
+}

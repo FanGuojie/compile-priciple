@@ -9,8 +9,8 @@ program
                 vardef arr arrtype inttype
                 assign
                     varref arr
-                    array concat
-                        array concat
-                            varref ws
+                    array repeat
+                        varref ws
+                        array repeat
                             varref ys
-                        varref xs
+                            varref xs

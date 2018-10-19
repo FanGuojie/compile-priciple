@@ -1,0 +1,17 @@
+program
+    class Main <empty>
+        static func main voidtype
+            formals
+            stmtblock
+                assign
+                    var xs
+                    array repeat
+                        intconst 1
+                        intconst 10
+                assign
+                    var sub1
+                    arrref
+                        varref xs
+                        range
+                            intconst 2
+                            intconst 6
