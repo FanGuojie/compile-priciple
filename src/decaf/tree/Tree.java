@@ -285,6 +285,7 @@ public abstract class Tree {
     public static final int SEALED = SCOPY + 1; 
     public static final int IFBRANCH = SEALED+ 1; 
     public static final int GUARDED= IFBRANCH+ 1; 
+    public static final int LISTCONST= GUARDED+ 1; 
     
     
     /**
@@ -642,7 +643,45 @@ public abstract class Tree {
    
    }
    
+   /*
+    * ListConst
+    */
+   public static class ListConst extends Expr {
+   	
+   	public List<Expr> elist;
+   	
+   	public ListConst(List<Expr> elist, Location loc) {
+			super(LISTCONST, loc);
+			// TODO Auto-generated constructor stub
+			this.elist=elist;
+			
+		}
+		@Override
+		public void accept(Visitor v) {
+           v.visitListConst(this);
+       }
+
+		@Override
+		public void printTo(IndentPrintWriter pw) {
+			// TODO Auto-generated method stub
+		   pw.println("array const");
+           pw.incIndent();
+           if (elist != null) {
+               for (Expr e : elist) {
+            	   if (e != null) {
+                       e.printTo(pw);
+                   }
+               }
+           }else {
+           	pw.println("<empty>");
+           }
+           pw.decIndent();
+		}
+   	
    
+   }
+
+  
     /**
       * A for loop.
       */
@@ -1328,7 +1367,7 @@ public abstract class Tree {
 
     	public int typeTag;
         public Object value;
-
+        
         public Literal(int typeTag, Object value, Location loc) {
             super(LITERAL, loc);
             this.typeTag = typeTag;
@@ -1468,7 +1507,12 @@ public abstract class Tree {
             super();
         }
 
-        public void visitGuarded(GuardedStmt that) {
+        public void visitListConst(ListConst that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitGuarded(GuardedStmt that) {
 			// TODO Auto-generated method stub
         	visitTree(that);
 		}

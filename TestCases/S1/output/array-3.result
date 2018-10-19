@@ -1,0 +1,11 @@
+program
+    class Main <empty>
+        static func main voidtype
+            formals
+            stmtblock
+                assign
+                    var xs
+                    array const
+                        intconst 1
+                        intconst 2
+                        intconst 3

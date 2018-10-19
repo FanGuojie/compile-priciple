@@ -399,7 +399,29 @@ Constant        :	LITERAL
                 	{
 						$$.expr = new Null($1.loc);
 					}
+				|	'[' ListConst ']'
+				{
+				
+						$$.expr = new Tree.ListConst($2.elist,  $2.loc);
+				}
                 ;
+
+ListConst		:	Constant
+				{
+					$$ = new SemValue();
+                    $$.elist = new ArrayList<Expr> ();
+                    $$.elist.add($1.expr);
+				}
+				|	  ListConst ',' Constant
+				{
+					$$.elist.add($3.expr);
+				}
+				|	/* empty */				
+				{
+					$$ = new SemValue();
+				}
+				;
+
 
 Actuals         :	ExprList
                 |	/* empty */

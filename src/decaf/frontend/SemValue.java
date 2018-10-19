@@ -8,6 +8,7 @@ import decaf.tree.Tree.ClassDef;
 import decaf.tree.Tree.Expr;
 import decaf.tree.Tree.MethodDef;
 import decaf.tree.Tree.LValue;
+import decaf.tree.Tree.Literal;
 import decaf.tree.Tree.TopLevel;
 import decaf.tree.Tree.VarDef;
 import decaf.tree.Tree.TypeLiteral;
@@ -41,6 +42,10 @@ public class SemValue {
 	public List<Tree> slist;
 
 	public List<Expr> elist;
+	
+	public List<Literal> llist;
+	
+	public Literal lite;
 
 	public TopLevel prog;
 

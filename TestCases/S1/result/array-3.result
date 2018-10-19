@@ -1,0 +1,6 @@
+assign
+    varref xs
+    array const
+        intconst 1
+        intconst 2
+        intconst 3
