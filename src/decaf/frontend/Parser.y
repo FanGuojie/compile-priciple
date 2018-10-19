@@ -33,7 +33,7 @@ import java.util.*;
 %token IDENTIFIER	  AND    OR    STATIC  INSTANCEOF
 %token LESS_EQUAL   GREATER_EQUAL  EQUAL   NOT_EQUAL
 %token IF IF_DIV
-%token VAR
+%token VAR ARRAY_REPEAT
 %token '+'  '-'  '*'  '/'  '%'  '='  '>'  '<'  '.'
 %token ','  ';'  '!'  '('  ')'  '['  ']'  '{'  '}'
 %token ':'
@@ -388,6 +388,10 @@ Expr            :	LValue
                 |	'(' CLASS IDENTIFIER ')' Expr
                 	{
                 		$$.expr = new Tree.TypeCast($3.ident, $5.expr, $5.loc);
+                	}
+                |	Expr ARRAY_REPEAT Constant
+                	{
+                		$$.expr = new Tree.ArrayRepeat($1.expr, $3.expr, $1.loc);
                 	}
                 ;
 	

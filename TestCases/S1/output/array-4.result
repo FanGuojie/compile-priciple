@@ -5,7 +5,6 @@ program
             stmtblock
                 assign
                     var xs
-                    array const
+                    array repeat
                         intconst 1
-                        intconst 2
-                        intconst 3
+                        intconst 10
