@@ -3,11 +3,8 @@ program
         static func main voidtype
             formals
             stmtblock
-                vardef ws arrtype inttype
-				vardef xs arrtype inttype
-				vardef arr arrtype inttype
-				assign    
-					varref arr 
-					array concat        
-						varref ws 
-			 		    varref xs
+                assign
+                    var xs
+                    array repeat
+                        intconst 1
+                        intconst 10

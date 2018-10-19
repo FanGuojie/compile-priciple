@@ -1287,8 +1287,6 @@ state 104
 	.  reduce 52
 
 
-105: shift/reduce conflict (shift 122, reduce 71) on ARRAY_REPEAT
-105: shift/reduce conflict (shift 123, reduce 71) on ARRAY_ADD
 state 105
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -1309,8 +1307,6 @@ state 105
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 
-	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
 	'.'  shift 131
 	'['  shift 132
 	AND  reduce 71
@@ -1319,6 +1315,8 @@ state 105
 	GREATER_EQUAL  reduce 71
 	EQUAL  reduce 71
 	NOT_EQUAL  reduce 71
+	ARRAY_REPEAT  reduce 71
+	ARRAY_ADD  reduce 71
 	'+'  reduce 71
 	'-'  reduce 71
 	'*'  reduce 71
@@ -1333,8 +1331,6 @@ state 105
 	':'  reduce 71
 
 
-106: shift/reduce conflict (shift 122, reduce 72) on ARRAY_REPEAT
-106: shift/reduce conflict (shift 123, reduce 72) on ARRAY_ADD
 state 106
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -1355,8 +1351,6 @@ state 106
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 
-	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
 	'.'  shift 131
 	'['  shift 132
 	AND  reduce 72
@@ -1365,6 +1359,8 @@ state 106
 	GREATER_EQUAL  reduce 72
 	EQUAL  reduce 72
 	NOT_EQUAL  reduce 72
+	ARRAY_REPEAT  reduce 72
+	ARRAY_ADD  reduce 72
 	'+'  reduce 72
 	'-'  reduce 72
 	'*'  reduce 72
@@ -2238,8 +2234,6 @@ state 152
 	.  reduce 84
 
 
-153: shift/reduce conflict (shift 122, reduce 68) on ARRAY_REPEAT
-153: shift/reduce conflict (shift 123, reduce 68) on ARRAY_ADD
 state 153
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2284,8 +2278,6 @@ state 153
 	':'  reduce 68
 
 
-154: shift/reduce conflict (shift 122, reduce 69) on ARRAY_REPEAT
-154: shift/reduce conflict (shift 123, reduce 69) on ARRAY_ADD
 state 154
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2330,8 +2322,6 @@ state 154
 	':'  reduce 69
 
 
-155: shift/reduce conflict (shift 122, reduce 66) on ARRAY_REPEAT
-155: shift/reduce conflict (shift 123, reduce 66) on ARRAY_ADD
 state 155
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2372,8 +2362,6 @@ state 155
 	':'  reduce 66
 
 
-156: shift/reduce conflict (shift 122, reduce 67) on ARRAY_REPEAT
-156: shift/reduce conflict (shift 123, reduce 67) on ARRAY_ADD
 state 156
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2414,8 +2402,6 @@ state 156
 	':'  reduce 67
 
 
-157: shift/reduce conflict (shift 122, reduce 62) on ARRAY_REPEAT
-157: shift/reduce conflict (shift 123, reduce 62) on ARRAY_ADD
 state 157
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2458,8 +2444,6 @@ state 157
 	':'  reduce 62
 
 
-158: shift/reduce conflict (shift 122, reduce 63) on ARRAY_REPEAT
-158: shift/reduce conflict (shift 123, reduce 63) on ARRAY_ADD
 state 158
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2508,23 +2492,6 @@ state 159
 	.  reduce 80
 
 
-160: shift/reduce conflict (shift 116, reduce 81) on AND
-160: shift/reduce conflict (shift 117, reduce 81) on OR
-160: shift/reduce conflict (shift 118, reduce 81) on LESS_EQUAL
-160: shift/reduce conflict (shift 119, reduce 81) on GREATER_EQUAL
-160: shift/reduce conflict (shift 120, reduce 81) on EQUAL
-160: shift/reduce conflict (shift 121, reduce 81) on NOT_EQUAL
-160: shift/reduce conflict (shift 122, reduce 81) on ARRAY_REPEAT
-160: shift/reduce conflict (shift 123, reduce 81) on ARRAY_ADD
-160: shift/reduce conflict (shift 124, reduce 81) on '+'
-160: shift/reduce conflict (shift 125, reduce 81) on '-'
-160: shift/reduce conflict (shift 126, reduce 81) on '*'
-160: shift/reduce conflict (shift 127, reduce 81) on '/'
-160: shift/reduce conflict (shift 128, reduce 81) on '%'
-160: shift/reduce conflict (shift 129, reduce 81) on '>'
-160: shift/reduce conflict (shift 130, reduce 81) on '<'
-160: shift/reduce conflict (shift 131, reduce 81) on '.'
-160: shift/reduce conflict (shift 132, reduce 81) on '['
 state 160
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2545,23 +2512,23 @@ state 160
 	Expr : Expr . ARRAY_ADD Expr  (81)
 	Expr : Expr ARRAY_ADD Expr .  (81)
 
-	AND  shift 116
-	OR  shift 117
-	LESS_EQUAL  shift 118
-	GREATER_EQUAL  shift 119
-	EQUAL  shift 120
-	NOT_EQUAL  shift 121
 	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
 	'+'  shift 124
 	'-'  shift 125
 	'*'  shift 126
 	'/'  shift 127
 	'%'  shift 128
-	'>'  shift 129
-	'<'  shift 130
 	'.'  shift 131
 	'['  shift 132
+	AND  reduce 81
+	OR  reduce 81
+	LESS_EQUAL  reduce 81
+	GREATER_EQUAL  reduce 81
+	EQUAL  reduce 81
+	NOT_EQUAL  reduce 81
+	ARRAY_ADD  reduce 81
+	'>'  reduce 81
+	'<'  reduce 81
 	','  reduce 81
 	';'  reduce 81
 	')'  reduce 81
@@ -2569,8 +2536,6 @@ state 160
 	':'  reduce 81
 
 
-161: shift/reduce conflict (shift 122, reduce 57) on ARRAY_REPEAT
-161: shift/reduce conflict (shift 123, reduce 57) on ARRAY_ADD
 state 161
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2591,8 +2556,6 @@ state 161
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 
-	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
 	'*'  shift 126
 	'/'  shift 127
 	'%'  shift 128
@@ -2604,6 +2567,8 @@ state 161
 	GREATER_EQUAL  reduce 57
 	EQUAL  reduce 57
 	NOT_EQUAL  reduce 57
+	ARRAY_REPEAT  reduce 57
+	ARRAY_ADD  reduce 57
 	'+'  reduce 57
 	'-'  reduce 57
 	'>'  reduce 57
@@ -2615,8 +2580,6 @@ state 161
 	':'  reduce 57
 
 
-162: shift/reduce conflict (shift 122, reduce 58) on ARRAY_REPEAT
-162: shift/reduce conflict (shift 123, reduce 58) on ARRAY_ADD
 state 162
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2637,8 +2600,6 @@ state 162
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 
-	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
 	'*'  shift 126
 	'/'  shift 127
 	'%'  shift 128
@@ -2650,6 +2611,8 @@ state 162
 	GREATER_EQUAL  reduce 58
 	EQUAL  reduce 58
 	NOT_EQUAL  reduce 58
+	ARRAY_REPEAT  reduce 58
+	ARRAY_ADD  reduce 58
 	'+'  reduce 58
 	'-'  reduce 58
 	'>'  reduce 58
@@ -2661,8 +2624,6 @@ state 162
 	':'  reduce 58
 
 
-163: shift/reduce conflict (shift 122, reduce 59) on ARRAY_REPEAT
-163: shift/reduce conflict (shift 123, reduce 59) on ARRAY_ADD
 state 163
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2683,8 +2644,6 @@ state 163
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 
-	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
 	'.'  shift 131
 	'['  shift 132
 	AND  reduce 59
@@ -2693,6 +2652,8 @@ state 163
 	GREATER_EQUAL  reduce 59
 	EQUAL  reduce 59
 	NOT_EQUAL  reduce 59
+	ARRAY_REPEAT  reduce 59
+	ARRAY_ADD  reduce 59
 	'+'  reduce 59
 	'-'  reduce 59
 	'*'  reduce 59
@@ -2707,8 +2668,6 @@ state 163
 	':'  reduce 59
 
 
-164: shift/reduce conflict (shift 122, reduce 60) on ARRAY_REPEAT
-164: shift/reduce conflict (shift 123, reduce 60) on ARRAY_ADD
 state 164
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2729,8 +2688,6 @@ state 164
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 
-	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
 	'.'  shift 131
 	'['  shift 132
 	AND  reduce 60
@@ -2739,6 +2696,8 @@ state 164
 	GREATER_EQUAL  reduce 60
 	EQUAL  reduce 60
 	NOT_EQUAL  reduce 60
+	ARRAY_REPEAT  reduce 60
+	ARRAY_ADD  reduce 60
 	'+'  reduce 60
 	'-'  reduce 60
 	'*'  reduce 60
@@ -2753,8 +2712,6 @@ state 164
 	':'  reduce 60
 
 
-165: shift/reduce conflict (shift 122, reduce 61) on ARRAY_REPEAT
-165: shift/reduce conflict (shift 123, reduce 61) on ARRAY_ADD
 state 165
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2775,8 +2732,6 @@ state 165
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 
-	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
 	'.'  shift 131
 	'['  shift 132
 	AND  reduce 61
@@ -2785,6 +2740,8 @@ state 165
 	GREATER_EQUAL  reduce 61
 	EQUAL  reduce 61
 	NOT_EQUAL  reduce 61
+	ARRAY_REPEAT  reduce 61
+	ARRAY_ADD  reduce 61
 	'+'  reduce 61
 	'-'  reduce 61
 	'*'  reduce 61
@@ -2799,8 +2756,6 @@ state 165
 	':'  reduce 61
 
 
-166: shift/reduce conflict (shift 122, reduce 65) on ARRAY_REPEAT
-166: shift/reduce conflict (shift 123, reduce 65) on ARRAY_ADD
 state 166
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -2841,8 +2796,6 @@ state 166
 	':'  reduce 65
 
 
-167: shift/reduce conflict (shift 122, reduce 64) on ARRAY_REPEAT
-167: shift/reduce conflict (shift 123, reduce 64) on ARRAY_ADD
 state 167
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -3567,8 +3520,6 @@ state 196
 	.  error
 
 
-197: shift/reduce conflict (shift 122, reduce 79) on ARRAY_REPEAT
-197: shift/reduce conflict (shift 123, reduce 79) on ARRAY_ADD
 state 197
 	Receiver : Expr . '.'  (48)
 	LValue : Expr . '[' Expr ']'  (51)
@@ -3589,28 +3540,7 @@ state 197
 	Expr : Expr . ARRAY_REPEAT Constant  (80)
 	Expr : Expr . ARRAY_ADD Expr  (81)
 
-	ARRAY_REPEAT  shift 122
-	ARRAY_ADD  shift 123
-	AND  reduce 79
-	OR  reduce 79
-	LESS_EQUAL  reduce 79
-	GREATER_EQUAL  reduce 79
-	EQUAL  reduce 79
-	NOT_EQUAL  reduce 79
-	'+'  reduce 79
-	'-'  reduce 79
-	'*'  reduce 79
-	'/'  reduce 79
-	'%'  reduce 79
-	'>'  reduce 79
-	'<'  reduce 79
-	'.'  reduce 79
-	','  reduce 79
-	';'  reduce 79
-	')'  reduce 79
-	'['  reduce 79
-	']'  reduce 79
-	':'  reduce 79
+	.  reduce 79
 
 
 state 198
@@ -3790,25 +3720,6 @@ state 207
 	ForStmt : FOR '(' SimpleStmt ';' Expr ';' SimpleStmt ')' Stmt .  (93)
 
 	.  reduce 93
-
-
-State 105 contains 2 shift/reduce conflicts.
-State 106 contains 2 shift/reduce conflicts.
-State 153 contains 2 shift/reduce conflicts.
-State 154 contains 2 shift/reduce conflicts.
-State 155 contains 2 shift/reduce conflicts.
-State 156 contains 2 shift/reduce conflicts.
-State 157 contains 2 shift/reduce conflicts.
-State 158 contains 2 shift/reduce conflicts.
-State 160 contains 17 shift/reduce conflicts.
-State 161 contains 2 shift/reduce conflicts.
-State 162 contains 2 shift/reduce conflicts.
-State 163 contains 2 shift/reduce conflicts.
-State 164 contains 2 shift/reduce conflicts.
-State 165 contains 2 shift/reduce conflicts.
-State 166 contains 2 shift/reduce conflicts.
-State 167 contains 2 shift/reduce conflicts.
-State 197 contains 2 shift/reduce conflicts.
 
 
 57 terminals, 35 nonterminals

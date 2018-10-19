@@ -43,6 +43,8 @@ import java.util.*;
 %left AND 
 %nonassoc EQUAL NOT_EQUAL
 %nonassoc LESS_EQUAL GREATER_EQUAL '<' '>'
+%right  ARRAY_ADD
+%left  ARRAY_REPEAT
 %left  '+' '-'
 %left  '*' '/' '%'  
 %nonassoc UMINUS '!' 

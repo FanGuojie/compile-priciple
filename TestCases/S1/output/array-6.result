@@ -5,9 +5,12 @@ program
             stmtblock
                 vardef ws arrtype inttype
                 vardef xs arrtype inttype
+                vardef ys arrtype inttype
                 vardef arr arrtype inttype
                 assign
                     varref arr
                     array concat
-                        varref ws
+                        array concat
+                            varref ws
+                            varref ys
                         varref xs

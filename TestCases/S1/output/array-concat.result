@@ -27,16 +27,16 @@ program
                 assign
                     varref err
                     array concat
-                        varref ws
                         array concat
+                            varref ws
                             varref xs
-                            varref ys
+                        varref ys
                 vardef arr1 arrtype inttype
                 assign
                     varref arr1
                     array concat
-                        varref ws
                         array concat
+                            varref ws
                             varref xs
-                            call empty
-                                <empty>
+                        call empty
+                            <empty>
