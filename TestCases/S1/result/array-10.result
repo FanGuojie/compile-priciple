@@ -13,7 +13,7 @@ program
                     intconst 1
                 assign
                     var zs
-                    array comp
+                    arref comp
                         varbind x
                         varref xs
                         geq

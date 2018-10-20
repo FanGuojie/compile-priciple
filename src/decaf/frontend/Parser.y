@@ -33,7 +33,7 @@ import java.util.*;
 %token IDENTIFIER	  AND    OR    STATIC  INSTANCEOF
 %token LESS_EQUAL   GREATER_EQUAL  EQUAL   NOT_EQUAL
 %token IF IF_DIV
-%token VAR ARRAY_REPEAT ARRAY_ADD DEFAULT IN
+%token VAR ARRAY_REPEAT ARRAY_ADD DEFAULT IN FOREACH
 %token '+'  '-'  '*'  '/'  '%'  '='  '>'  '<'  '.'
 %token ','  ';'  '!'  '('  ')'  '['  ']'  '{'  '}'
 %token ':'
@@ -209,8 +209,28 @@ Stmt		    :	VariableDef
                 |	StmtBlock
                 |   OCStmt ';'
                 |	GuardedStmt
+                |	ForeachStmt
                 ;
 
+ForeachStmt		:	FOREACH '(' BoundVariable IN Expr WHILE Expr ')' Stmt
+					{
+						$$.stmt = new Tree.Foreach($3.bvar,$5.expr,$7.expr,$9.stmt, $3.loc);
+					}
+				|	FOREACH '(' BoundVariable IN Expr ')' Stmt 
+					{
+						$$.stmt = new Tree.Foreach($3.bvar,$5.expr,$7.stmt, $3.loc);
+					}
+				;
+					
+BoundVariable	:	VAR IDENTIFIER
+					{
+					$$.stmt = new Tree.BoundVariable($2.ident, true,$2.loc);
+					}
+				|	Type IdenTIFIER
+					{
+					$$.stmt = new Tree.BoundVariable($2.ident,false, $2.loc);
+					}
+				;
 GuardedStmt 	:   IF '{' IfBranchList '}' 
 				{
 					$$.stmt = new Tree.GuardedStmt($3.elist, $3.loc);
@@ -276,7 +296,10 @@ LValue          :	Receiver IDENTIFIER
                 	{
                 		$$.lvalue = new Tree.Indexed($1.expr, $3.expr, $1.loc);
                 	}
-                |	VAR IDENTIFIER
+                |	VarValue
+                ;
+
+VarValue		:	VAR IDENTIFIER
                 {
                 	$$.lvalue = new Tree.Var($1.expr, $2.ident, $2.loc);
 						if ($1.loc == null) {
@@ -392,7 +415,7 @@ Expr            :	LValue
                 	{
                 		$$.expr = new Tree.TypeCast($3.ident, $5.expr, $5.loc);
                 	}
-                |	Expr ARRAY_REPEAT Constant
+                |	Expr ARRAY_REPEAT Expr
                 	{
                 		$$.expr = new Tree.ArrayRepeat($1.expr, $3.expr, $1.loc);
                 	}

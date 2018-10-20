@@ -36,8 +36,8 @@ program
                 vardef manyzs arrtype arrtype stringtype
                 assign
                     varref manyzs
-                    mul
-                        array repeat
-                            varref zs
+                    array repeat
+                        varref zs
+                        mul
                             intconst 5
-                        intconst 6
+                            intconst 6

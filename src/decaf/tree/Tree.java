@@ -291,6 +291,8 @@ public abstract class Tree {
     public static final int SUBARRAY= ARRAYADD+ 1; 
     public static final int ARRAYDEFAULT= SUBARRAY+ 1; 
     public static final int ARRAYPYTHON= ARRAYDEFAULT+ 1; 
+    public static final int BOUNDVARIABLE= ARRAYPYTHON+ 1; 
+    public static final int FOREACH= BOUNDVARIABLE+ 1; 
     
     
     /**
@@ -686,7 +688,94 @@ public abstract class Tree {
    
    }
 
-  
+   
+
+   /**
+     * BoundVariable
+     */
+   public static class BoundVariable extends Tree {
+
+   	public Var var;
+   	public VarDef vdef;
+   	public boolean varFlag;
+   	public String ident;
+
+       public BoundVariable(String ident,boolean varFlag, Location loc) {
+           super(BOUNDVARIABLE, loc);
+           this.ident=ident;
+           this.varFlag=varFlag;
+           System.out.println(ident);
+       }
+
+   	@Override
+       public void accept(Visitor v) {
+           v.visitBoundVariable(this);
+       }
+
+   	@Override
+   	public void printTo(IndentPrintWriter pw) {
+   		pw.print("varbind "+ident);
+   		if(varFlag) {
+   			pw.println(" "+"var");
+   		}else {
+   			pw.println(" "+"type");
+   		}
+   	}
+  }
+
+   /**
+     * BoundVariable
+     */
+   public static class Foreach extends Expr {
+
+   	public Expr expr1;
+   	public Expr expr2;
+   	public Tree stmt;
+   	public BoundVariable bvar;
+   	public boolean trueFlag;
+   	
+       public Foreach(BoundVariable bvar,Expr expr1,Expr expr2,Tree stmt, Location loc) {
+           super(FOREACH, loc);
+           this.expr1=expr1;
+           this.expr2=expr2;
+           this.stmt=stmt;
+           this.bvar=bvar;
+           trueFlag=false;
+       }
+       public Foreach(BoundVariable bvar,Expr expr1,Tree stmt, Location loc) {
+           super(FOREACH, loc);
+           this.expr1=expr1;
+           this.stmt=stmt;
+           this.bvar=bvar;
+           trueFlag=true;
+       }
+
+   	@Override
+       public void accept(Visitor v) {
+           v.visitForeach(this);
+       }
+
+   	@Override
+   	public void printTo(IndentPrintWriter pw) {
+   		pw.println("foreach");
+   		pw.incIndent();
+   		bvar.printTo(pw);
+   		expr1.printTo(pw);
+   		if(trueFlag) {
+   			pw.println("boolconst true");
+   		}else {
+   			expr2.printTo(pw);
+   		}
+   		if(stmt!=null) {
+   			stmt.printTo(pw);
+   		}else {
+   			pw.println("<empty>");
+   		}
+   		pw.decIndent();
+   	}
+  }
+
+
     /**
       * A for loop.
       */
@@ -733,7 +822,9 @@ public abstract class Tree {
     	}
    }
 
+
     /**
+
       * An "if ( ) { } else { }" block
       */
     public static class If extends Tree {
@@ -1444,7 +1535,7 @@ public static class ArrayPython extends Expr {
         super(ARRAYPYTHON, loc);
 		this.expr1 = expr1;
 		this.expr2 = expr2;
-		this.expr3 = expr3;
+		this.ident=ident;
 		this.ifFlag=false;
    }
 	@Override
@@ -1454,7 +1545,7 @@ public static class ArrayPython extends Expr {
 
 	@Override
 	public void printTo(IndentPrintWriter pw) {
-		pw.println("arref comp");
+		pw.println("array comp");
 		pw.incIndent();
 		pw.println("varbind "+ident);
 		
@@ -1470,6 +1561,8 @@ public static class ArrayPython extends Expr {
 	        }else {
 	        	pw.println("<empty>");
 	        }
+		}else {
+			pw.println("boolconst true");
 		}
 		
 		if (expr1 != null) {
@@ -1574,7 +1667,7 @@ public static class ArrayPython extends Expr {
      * VAR
      */
    public static class Var extends LValue {
-
+	   
    	public Expr owner;
    	public String name;
    	public boolean isDefined;
@@ -1748,7 +1841,17 @@ public static class ArrayPython extends Expr {
             super();
         }
 
-        public void visitArrayPython(ArrayPython that) {
+        public void visitForeach(Foreach that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitBoundVariable(BoundVariable that) {
+			// TODO Auto-generated method stub
+        	visitTree(that);
+		}
+
+		public void visitArrayPython(ArrayPython that) {
 			// TODO Auto-generated method stub
         	visitTree(that);
 		}

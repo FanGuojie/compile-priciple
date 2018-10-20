@@ -1,5 +1,5 @@
 class Main {
     static void main() {
         var xs = [1,2,3];
-        }
+    }
 }

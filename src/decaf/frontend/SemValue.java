@@ -4,6 +4,7 @@ import java.util.List;
 
 import decaf.Location;
 import decaf.tree.Tree;
+import decaf.tree.Tree.BoundVariable;
 import decaf.tree.Tree.ClassDef;
 import decaf.tree.Tree.Expr;
 import decaf.tree.Tree.MethodDef;
@@ -12,6 +13,7 @@ import decaf.tree.Tree.Literal;
 import decaf.tree.Tree.TopLevel;
 import decaf.tree.Tree.VarDef;
 import decaf.tree.Tree.TypeLiteral;
+import decaf.tree.Tree.Var;
 import decaf.utils.MiscUtils;
 
 public class SemValue {
@@ -62,7 +64,10 @@ public class SemValue {
 	public Expr expr;
 
 	public LValue lvalue;
+	
+	public Var var;
 
+	public BoundVariable bvar;
 	/**
 	 * 创建一个关键字的语义值
 	 * 

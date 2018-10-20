@@ -11,25 +11,27 @@ program
                 vardef plus1 arrtype inttype
                 assign
                     varref plus1
-                    arref comp
-                        varbind null
+                    array comp
+                        varbind x
                         varref xs
+                        boolconst true
                         add
                             varref x
                             intconst 1
                 vardef is_positive arrtype booltype
                 assign
                     varref is_positive
-                    arref comp
-                        varbind null
+                    array comp
+                        varbind x
                         varref xs
+                        boolconst true
                         gtr
                             varref x
                             intconst 0
                 vardef positive arrtype inttype
                 assign
                     varref positive
-                    arref comp
+                    array comp
                         varbind x
                         varref xs
                         gtr
@@ -43,7 +45,7 @@ program
                 vardef times_y_ge_5 arrtype inttype
                 assign
                     varref times_y
-                    arref comp
+                    array comp
                         varbind x
                         varref xs
                         geq

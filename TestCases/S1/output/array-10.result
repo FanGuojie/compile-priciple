@@ -1,5 +1,4 @@
 s
-s
 Exception in thread "main" java.lang.NullPointerException
 	at decaf.tree.Tree$Foreach.printTo(Tree.java:762)
 	at decaf.tree.Tree$Block.printTo(Tree.java:502)
