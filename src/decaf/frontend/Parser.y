@@ -224,11 +224,11 @@ ForeachStmt		:	FOREACH '(' BoundVariable IN Expr WHILE Expr ')' Stmt
 					
 BoundVariable	:	VAR IDENTIFIER
 					{
-					$$.stmt = new Tree.BoundVariable($2.ident, true,$2.loc);
+					$$.bvar = new Tree.BoundVariable($2.ident, true,$2.loc);
 					}
 				|	Type IdenTIFIER
 					{
-					$$.stmt = new Tree.BoundVariable($2.ident,false, $2.loc);
+					$$.bvar = new Tree.BoundVariable($2.ident,false, $2.loc);
 					}
 				;
 GuardedStmt 	:   IF '{' IfBranchList '}' 

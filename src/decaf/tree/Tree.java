@@ -704,7 +704,6 @@ public abstract class Tree {
            super(BOUNDVARIABLE, loc);
            this.ident=ident;
            this.varFlag=varFlag;
-           System.out.println(ident);
        }
 
    	@Override
@@ -726,7 +725,7 @@ public abstract class Tree {
    /**
      * BoundVariable
      */
-   public static class Foreach extends Expr {
+   public static class Foreach extends Tree {
 
    	public Expr expr1;
    	public Expr expr2;

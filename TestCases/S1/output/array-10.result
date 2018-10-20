@@ -1,9 +1,20 @@
-s
-Exception in thread "main" java.lang.NullPointerException
-	at decaf.tree.Tree$Foreach.printTo(Tree.java:762)
-	at decaf.tree.Tree$Block.printTo(Tree.java:502)
-	at decaf.tree.Tree$MethodDef.printTo(Tree.java:434)
-	at decaf.tree.Tree$ClassDef.printTo(Tree.java:391)
-	at decaf.tree.Tree$TopLevel.printTo(Tree.java:351)
-	at decaf.Driver.compile(Driver.java:66)
-	at decaf.Driver.main(Driver.java:76)
+program
+    class Main <empty>
+        static func main voidtype
+            formals
+            stmtblock
+                assign
+                    varref ss
+                    array repeat
+                        intconst 1
+                        intconst 10
+                foreach
+                    varbind s var
+                    varref ss
+                    les
+                        call length
+                            varref s
+                        intconst 10
+                    stmtblock
+                        print
+                            varref s

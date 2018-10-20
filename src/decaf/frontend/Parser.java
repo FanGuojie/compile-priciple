@@ -1205,13 +1205,13 @@ break;
 case 42:
 //#line 226 "Parser.y"
 {
-					yyval.stmt = new Tree.BoundVariable(val_peek(0).ident, true,val_peek(0).loc);
+					yyval.bvar = new Tree.BoundVariable(val_peek(0).ident, true,val_peek(0).loc);
 					}
 break;
 case 43:
 //#line 230 "Parser.y"
 {
-					yyval.stmt = new Tree.BoundVariable(val_peek(0).ident,false, val_peek(0).loc);
+					yyval.bvar = new Tree.BoundVariable(val_peek(0).ident,false, val_peek(0).loc);
 					}
 break;
 case 44:

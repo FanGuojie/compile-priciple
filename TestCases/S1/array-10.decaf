@@ -1,9 +1,10 @@
 class Main {
 	static void main() {
 	    ss=1 %% 10;
-    	foreach (var s in ss) {
-    	Print(s);
+    	foreach (var s in ss while s.length() < 10) {
+    		Print(s);
 		}
+
      }
 
 }

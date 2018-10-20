@@ -4,21 +4,17 @@ program
             formals
             stmtblock
                 assign
-                    var xs
+                    varref ss
                     array repeat
                         intconst 1
                         intconst 10
-                assign
-                    var y
-                    intconst 1
-                assign
-                    var zs
-                    arref comp
-                        varbind x
-                        varref xs
-                        geq
-                            varref x
-                            intconst 5
-                        mul
-                            varref x
-                            varref y
+                foreach
+                    varbind s var
+                    varref ss
+                    les
+                        call length
+                            varref s
+                        intconst 10
+                    stmtblock
+                        print
+                            varref s
