@@ -1,0 +1,13 @@
+class Main {
+    static void main() {
+        string[] ss;
+        ss = new string[10];
+
+        int cnt;
+        cnt = 0;
+        foreach (string s in ss while s.length() < 10 ) {
+            Print(s);
+            cnt = cnt + 1;
+        }
+    }
+}

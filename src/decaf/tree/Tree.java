@@ -699,13 +699,19 @@ public abstract class Tree {
    	public VarDef vdef;
    	public boolean varFlag;
    	public String ident;
+   	public TypeLiteral type;
 
-       public BoundVariable(String ident,boolean varFlag, Location loc) {
+       public BoundVariable(String ident, Location loc) {
            super(BOUNDVARIABLE, loc);
            this.ident=ident;
-           this.varFlag=varFlag;
+           this.varFlag=true;
        }
-
+       public BoundVariable(TypeLiteral type,String ident, Location loc) {
+           super(BOUNDVARIABLE, loc);
+           this.ident=ident;
+           this.type=type;
+           this.varFlag=false;
+       }
    	@Override
        public void accept(Visitor v) {
            v.visitBoundVariable(this);
@@ -713,11 +719,12 @@ public abstract class Tree {
 
    	@Override
    	public void printTo(IndentPrintWriter pw) {
-   		pw.print("varbind "+ident);
+   		pw.print("varbind "+ident+" ");
    		if(varFlag) {
-   			pw.println(" "+"var");
+   			pw.println("var");
    		}else {
-   			pw.println(" "+"type");
+   			type.printTo(pw);
+   			pw.println();
    		}
    	}
   }

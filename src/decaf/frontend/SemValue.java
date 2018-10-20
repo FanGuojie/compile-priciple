@@ -11,6 +11,7 @@ import decaf.tree.Tree.MethodDef;
 import decaf.tree.Tree.LValue;
 import decaf.tree.Tree.Literal;
 import decaf.tree.Tree.TopLevel;
+import decaf.tree.Tree.TypeIdent;
 import decaf.tree.Tree.VarDef;
 import decaf.tree.Tree.TypeLiteral;
 import decaf.tree.Tree.Var;
@@ -58,6 +59,8 @@ public class SemValue {
 	public MethodDef fdef;
 
 	public TypeLiteral type;
+	
+	public TypeIdent ty;
 
 	public Tree stmt;
 

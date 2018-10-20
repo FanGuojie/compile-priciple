@@ -1,0 +1,29 @@
+program
+    class Main <empty>
+        static func main voidtype
+            formals
+            stmtblock
+                vardef ss arrtype stringtype
+                assign
+                    varref ss
+                    newarray stringtype
+                        intconst 10
+                vardef cnt inttype
+                assign
+                    varref cnt
+                    intconst 0
+                foreach
+                    varbind s stringtype
+                    varref ss
+                    les
+                        call length
+                            varref s
+                        intconst 10
+                    stmtblock
+                        print
+                            varref s
+                        assign
+                            varref cnt
+                            add
+                                varref cnt
+                                intconst 1

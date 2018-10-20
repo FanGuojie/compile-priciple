@@ -57,7 +57,7 @@
   41              | FOREACH '(' BoundVariable IN Expr ')' Stmt
 
   42  BoundVariable : VAR IDENTIFIER
-  43                | Type IdenTIFIER
+  43                | Type IDENTIFIER
 
   44  GuardedStmt : IF '{' IfBranchList '}'
 
@@ -2420,10 +2420,10 @@ state 154
 
 state 155
 	Type : Type . '[' ']'  (11)
-	BoundVariable : Type . IdenTIFIER  (43)
+	BoundVariable : Type . IDENTIFIER  (43)
 
+	IDENTIFIER  shift 193
 	'['  shift 33
-	IdenTIFIER  shift 193
 	.  error
 
 
@@ -3658,7 +3658,7 @@ state 192
 
 
 state 193
-	BoundVariable : Type IdenTIFIER .  (43)
+	BoundVariable : Type IDENTIFIER .  (43)
 
 	.  reduce 43
 
@@ -4751,5 +4751,5 @@ state 240
 	.  reduce 91
 
 
-61 terminals, 38 nonterminals
+60 terminals, 38 nonterminals
 111 grammar rules, 241 states

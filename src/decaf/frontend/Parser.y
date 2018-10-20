@@ -39,6 +39,7 @@ import java.util.*;
 %token ':'
 %token SEALED
 
+
 %left OR
 %left AND 
 %nonassoc EQUAL NOT_EQUAL
@@ -224,11 +225,11 @@ ForeachStmt		:	FOREACH '(' BoundVariable IN Expr WHILE Expr ')' Stmt
 					
 BoundVariable	:	VAR IDENTIFIER
 					{
-					$$.bvar = new Tree.BoundVariable($2.ident, true,$2.loc);
+					$$.bvar = new Tree.BoundVariable($2.ident, $2.loc);
 					}
-				|	Type IdenTIFIER
+				|	Type IDENTIFIER
 					{
-					$$.bvar = new Tree.BoundVariable($2.ident,false, $2.loc);
+					$$.bvar = new Tree.BoundVariable($1.type,$2.ident, $2.loc);
 					}
 				;
 GuardedStmt 	:   IF '{' IfBranchList '}' 
